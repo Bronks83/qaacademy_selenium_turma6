@@ -1,13 +1,19 @@
 package register;
 
+import org.junit.Assert;
 import org.junit.Test;
+import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.Select;
 
+import java.time.Duration;
+
 public class RegisterTest {
     WebDriver driver;
+
+    /*
     @Test
 
     public void testRegister() {
@@ -32,10 +38,81 @@ public class RegisterTest {
         ano.selectByVisibleText("1983");
 
 
-//        driver.quit();
 
 
 
+
+    }*/
+    @Test
+    public void alertOK() {
+        driver = new ChromeDriver();
+        driver.manage().window().maximize();
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+        driver.get("https://demo.automationtesting.in/Alerts.html");
+        driver.findElement(By.xpath("//*[@id=\"OKTab\"]/button")).click();
+        //capturar alert
+        Alert alert = driver.switchTo().alert();
+        String textoAlert = alert.getText();
+        Assert.assertEquals("Texto alert inválido", "I am an alert box!", textoAlert);
+
+        // clicar no botão OK
+        alert.accept();
+        driver.quit();
+    }
+
+    @Test
+    public void alertOKCancel() throws InterruptedException {
+        driver = new ChromeDriver();
+        driver.manage().window().maximize();
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+        driver.get("https://demo.automationtesting.in/Alerts.html");
+        driver.findElement(By.xpath("/html/body/div[1]/div/div/div/div[1]/ul/li[2]/a")).click();
+        driver.findElement(By.xpath("//*[@id=\"CancelTab\"]/button")).click();
+
+        Alert alert = driver.switchTo().alert();
+        String textoAlert = alert.getText();
+        Assert.assertEquals("Texto alert inválido", "Press a Button !", textoAlert);
+        alert.dismiss();
+        String textoAlert2 = driver.findElement(By.xpath("//*[@id=\"demo\"]")).getText();
+        Assert.assertEquals("Texto alert inválido", "You Pressed Cancel", textoAlert2);
+        Thread.sleep(5000);
+        driver.quit();
+    }
+
+    @Test
+    public void alertTextBox() throws InterruptedException {
+        driver = new ChromeDriver();
+        driver.manage().window().maximize();
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+        driver.get("https://demo.automationtesting.in/Alerts.html");
+        driver.findElement(By.xpath("/html/body/div[1]/div/div/div/div[1]/ul/li[3]/a")).click();
+        driver.findElement(By.xpath("//*[@id=\"Textbox\"]/button")).click();
+
+        Alert alert = driver.switchTo().alert();
+        alert.sendKeys("Bruno");
+        alert.accept();
+
+        String textoAlert3 = driver.findElement(By.xpath("//*[@id=\"demo1\"]")).getText();
+        Assert.assertEquals("Texto alert inválido", "Hello Bruno How are you today", textoAlert3);
+        Thread.sleep(5000);
+        driver.quit();
+
+
+    }
+
+    @Test
+    public void iframe(){
+        driver = new ChromeDriver();
+        driver.manage().window().maximize();
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+        driver.get("https://demo.automationtesting.in/Frames.html");
+
+        //alterar o foco do driver para o Frame
+        driver.switchTo().frame("singleframe");
+        driver.findElement(By.xpath("/html/body/section/div/div/div/input")).sendKeys("Teste teste");
+
+        //voltar o foco para o html normal
+        driver.switchTo().defaultContent();
 
     }
 
