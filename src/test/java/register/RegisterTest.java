@@ -8,7 +8,6 @@ import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.support.ui.Select;
 
 import java.time.Duration;
 
@@ -26,8 +25,16 @@ public class RegisterTest {
     @Test
     public void testRegister() {
 //        driver.get("https://demo.automationtesting.in/Register.html");
-        PreencherFormulario preencherFormulario = new PreencherFormulario();
-        preencherFormulario.preencherFormulario(driver);
+        RegisterPage registerPage = new RegisterPage();
+        registerPage.preencherUrl(driver);
+        registerPage.preencherNome(driver);
+        registerPage.preencherSobrenome(driver);
+        registerPage.preencherEndereco(driver);
+        registerPage.preencherEmail(driver);
+        registerPage.preencherTelefone(driver);
+        registerPage.preencherGenero(driver);
+        registerPage.preencherHobies(driver);
+        registerPage.preencherHabilidade(driver);
 
 
 //        driver = new ChromeDriver();
@@ -55,6 +62,11 @@ public class RegisterTest {
 
     @Test
     public void alertOK() {
+        AlertOkPage alertOkPage = new AlertOkPage();
+        alertOkPage.preencherUrl(driver);
+        alertOkPage.clicarBotao(driver);
+        alertOkPage.capturarAlert(driver);
+//        alertOkPage.clicarBotaoOk(driver);
 //        driver = new ChromeDriver();
 //        driver.manage().window().maximize();
 //        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
@@ -72,9 +84,9 @@ public class RegisterTest {
 
     @Test
     public void alertOKCancel() throws InterruptedException {
-        driver = new ChromeDriver();
-        driver.manage().window().maximize();
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+//        driver = new ChromeDriver();
+//        driver.manage().window().maximize();
+//        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
         driver.get("https://demo.automationtesting.in/Alerts.html");
         driver.findElement(By.xpath("/html/body/div[1]/div/div/div/div[1]/ul/li[2]/a")).click();
         driver.findElement(By.xpath("//*[@id=\"CancelTab\"]/button")).click();
@@ -143,6 +155,7 @@ public class RegisterTest {
 
 
     }
+
     @After
     public void fecharBrowser() throws InterruptedException {
         Thread.sleep(5000);
