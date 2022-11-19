@@ -1,6 +1,8 @@
 package register;
 
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
@@ -13,51 +15,59 @@ import java.time.Duration;
 public class RegisterTest {
     WebDriver driver;
 
-    /*
-    @Test
+    @Before
 
-    public void testRegister() {
-        driver = new ChromeDriver();
-        driver.manage().window().maximize();
-        driver.get("https://demo.automationtesting.in/Register.html");
-        driver.findElement(By.xpath("//*[@id=\"basicBootstrapForm\"]/div[1]/div[1]/input")).sendKeys("Eneas");
-        driver.findElement(By.xpath("//*[@id=\"basicBootstrapForm\"]/div[1]/div[2]/input")).sendKeys("Carneiro");
-        driver.findElement(By.xpath("//*[@id=\"basicBootstrapForm\"]/div[2]/div/textarea")).sendKeys("Av. Celso Garcia 1907");
-        driver.findElement(By.xpath("//*[@id=\"eid\"]/input")).sendKeys("teste@teste.com");
-        driver.findElement(By.xpath("//*[@id=\"basicBootstrapForm\"]/div[4]/div/input")).sendKeys("9999-9998");
-        driver.findElement(By.xpath("//*[@id=\"basicBootstrapForm\"]/div[5]/div/label[1]/input")).click();
-        driver.findElement(By.id("checkbox1")).click();
-        driver.findElement(By.id("checkbox2")).click();
-        Select lstSkills = new Select(driver.findElement(By.id("Skills")));
-        lstSkills.selectByVisibleText("XML");
-        driver.findElement(By.xpath("//*[@id=\"basicBootstrapForm\"]/div[10]/div/span/span[1]/span/span[2]/b")).click();
-        driver.findElement(By.xpath("//*[@id=\"select2-country-results\"]/li[5]")).click();
-
-
-        Select ano = new Select(driver.findElement(By.id("yearbox")));
-        ano.selectByVisibleText("1983");
-
-
-
-
-
-
-    }*/
-    @Test
-    public void alertOK() {
+    public void abrirBrowser() {
         driver = new ChromeDriver();
         driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
-        driver.get("https://demo.automationtesting.in/Alerts.html");
-        driver.findElement(By.xpath("//*[@id=\"OKTab\"]/button")).click();
-        //capturar alert
-        Alert alert = driver.switchTo().alert();
-        String textoAlert = alert.getText();
-        Assert.assertEquals("Texto alert inválido", "I am an alert box!", textoAlert);
+    }
+
+    @Test
+    public void testRegister() {
+//        driver.get("https://demo.automationtesting.in/Register.html");
+        PreencherFormulario preencherFormulario = new PreencherFormulario();
+        preencherFormulario.preencherFormulario(driver);
+
+
+//        driver = new ChromeDriver();
+//        driver.manage().window().maximize();
+//        driver.get("https://demo.automationtesting.in/Register.html");
+//        driver.findElement(By.xpath("//*[@id=\"basicBootstrapForm\"]/div[1]/div[1]/input")).sendKeys("Eneas");
+//        driver.findElement(By.xpath("//*[@id=\"basicBootstrapForm\"]/div[1]/div[2]/input")).sendKeys("Carneiro");
+//        driver.findElement(By.xpath("//*[@id=\"basicBootstrapForm\"]/div[2]/div/textarea")).sendKeys("Av. Celso Garcia 1907");
+//        driver.findElement(By.xpath("//*[@id=\"eid\"]/input")).sendKeys("teste@teste.com");
+//        driver.findElement(By.xpath("//*[@id=\"basicBootstrapForm\"]/div[4]/div/input")).sendKeys("9999-9998");
+//        driver.findElement(By.xpath("//*[@id=\"basicBootstrapForm\"]/div[5]/div/label[1]/input")).click();
+//        driver.findElement(By.id("checkbox1")).click();
+//        driver.findElement(By.id("checkbox2")).click();
+//        Select lstSkills = new Select(driver.findElement(By.id("Skills")));
+//        lstSkills.selectByVisibleText("XML");
+////        driver.findElement(By.id("//*[@id=\"basicBootstrapForm\"]/div[10]/div/span/span[1]/span")).click();
+////        driver.findElement(By.xpath("//*[@id=\"select2-country-results\"]/li[5]")).click();
+//        Select ano = new Select(driver.findElement(By.id("yearbox")));
+//        ano.selectByVisibleText("1983");
+//        Select mes = new Select(driver.findElement(By.xpath("//*[@id=\"basicBootstrapForm\"]/div[11]/div[2]/select")));
+//        mes.selectByVisibleText("September");
+//        Select dia = new Select(driver.findElement(By.id("daybox")));
+//        dia.selectByVisibleText("26");
+    }
+
+    @Test
+    public void alertOK() {
+//        driver = new ChromeDriver();
+//        driver.manage().window().maximize();
+//        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+//        driver.get("https://demo.automationtesting.in/Alerts.html");
+//        driver.findElement(By.xpath("//*[@id=\"OKTab\"]/button")).click();
+//        //capturar alert
+//        Alert alert = driver.switchTo().alert();
+//        String textoAlert = alert.getText();
+//        Assert.assertEquals("Texto alert inválido", "I am an alert box!", textoAlert);
 
         // clicar no botão OK
-        alert.accept();
-        driver.quit();
+//        alert.accept();
+//        driver.quit();
     }
 
     @Test
@@ -101,7 +111,7 @@ public class RegisterTest {
     }
 
     @Test
-    public void iframe(){
+    public void iframe() {
         driver = new ChromeDriver();
         driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
@@ -112,8 +122,31 @@ public class RegisterTest {
         driver.findElement(By.xpath("/html/body/section/div/div/div/input")).sendKeys("Teste teste");
 
         //voltar o foco para o html normal
-        driver.switchTo().defaultContent();
+//        driver.switchTo().defaultContent();
 
     }
 
+    @Test
+    public void window() {
+        driver = new ChromeDriver();
+        driver.manage().window().maximize();
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+        driver.get("https://demo.automationtesting.in/Windows.html");
+
+        driver.findElement(By.xpath("//*[@id=\"Tabbed\"]/a/button")).click();
+
+
+        Object[] janelas = driver.getWindowHandles().toArray();
+        driver.switchTo().window(janelas[1].toString());
+        String URLNovaAba = driver.getCurrentUrl();
+        Assert.assertEquals("https://www.selenium.dev/", URLNovaAba);
+
+
+    }
+    @After
+    public void fecharBrowser() throws InterruptedException {
+        Thread.sleep(5000);
+        driver.quit();
+    }
 }
+
